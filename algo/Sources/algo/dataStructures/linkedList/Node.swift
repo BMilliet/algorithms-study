@@ -1,8 +1,8 @@
-final class Node {
-    var data: Any
+final class Node<T> {
+    var data: T
     var next: Node?
 
-    init(data: Any, next: Node? = nil) {
+    init(data: T, next: Node? = nil) {
         self.data = data
         self.next = next
     }
