@@ -81,6 +81,23 @@ struct LinkedList<T> {
         node.next = Node(data: value, next: node.next)
         return node.next
     }
+
+    mutating func remapNodes() {
+        guard !isKnownUniquelyReferenced(&head) else { return }
+        guard var oldNode = head else { return }
+
+        head = Node(data: oldNode.data)
+        var newNode = head
+
+        while let nextOldNode = oldNode.next {
+            newNode!.next = Node(data: nextOldNode.data)
+            newNode = newNode?.next
+
+            oldNode = nextOldNode
+        }
+
+        tail = newNode
+    }
 }
 
 extension LinkedList: CustomStringConvertible {

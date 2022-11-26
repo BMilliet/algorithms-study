@@ -127,4 +127,21 @@ final class LinkedListTests: XCTestCase {
         XCTAssertEqual(list.first, 4)
         XCTAssertEqual(list.reduce(0, +), 10)
     }
+
+    func testCOW() throws {
+        var list = LinkedList<Int>()
+        list.push(1)
+        list.push(2)
+        list.push(3)
+        list.push(4)
+
+        var list2 = list
+        list2.remapNodes()
+
+        list2.append(10)
+        list2.remove(at: 3)
+
+        XCTAssertTrue(isKnownUniquelyReferenced(&list.head))
+        XCTAssertTrue(isKnownUniquelyReferenced(&list2.head))
+    }
 }
