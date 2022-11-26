@@ -3,61 +3,128 @@ import XCTest
 @testable import algo
 
 final class LinkedListTests: XCTestCase {
-    func testSize() throws {
-        let n3 = Node(data: 3, next: nil)
-        let n2 = Node(data: 2, next: n3)
-        let n1 = Node(data: 1, next: n2)
-
-        let list = LinkedList(head: n1)
-
-        XCTAssertEqual(list.size(), 3)
-    }
-
-    func testAdd() throws {
-        let n3 = Node(data: 3, next: nil)
-        let n2 = Node(data: 2, next: n3)
-        let n1 = Node(data: 1, next: n2)
-
-        let list = LinkedList(head: n1)
-        list.add(data: 10)
+    func testPushMultipleValues() throws {
+        var list = LinkedList<Int>()
+        list.push(1)
+        list.push(2)
+        list.push(3)
 
         let headValue: Int = try XCTUnwrap(list.head?.data as? Int)
-        let nextValue: Int = try XCTUnwrap(list.head?.next?.data as? Int)
+        let tailValue: Int = try XCTUnwrap(list.tail?.data as? Int)
 
-        XCTAssertEqual(list.size(), 4)
-        XCTAssertEqual(headValue, 10)
-        XCTAssertEqual(nextValue, 1)
+        XCTAssertEqual(headValue, 3)
+        XCTAssertEqual(tailValue, 1)
     }
 
-    func testToString() throws {
-        let n3 = Node(data: 3, next: nil)
-        let n2 = Node(data: 2, next: n3)
-        let n1 = Node(data: 1, next: n2)
+    func testPushSingleValue() throws {
+        var list = LinkedList<Int>()
+        list.push(1)
 
-        let list = LinkedList(head: n1)
+        let headValue: Int = try XCTUnwrap(list.head?.data as? Int)
+        let tailValue: Int = try XCTUnwrap(list.tail?.data as? Int)
 
-        XCTAssertEqual(list.toString(), "[HEAD: 1] -> [2] -> [TAIL: 3]")
+        XCTAssertEqual(headValue, 1)
+        XCTAssertEqual(tailValue, 1)
     }
 
-    // TODO: return node
-    func testSearch() throws {
-        let n3 = Node(data: 3, next: nil)
-        let n2 = Node(data: 2, next: n3)
-        let n1 = Node(data: 1, next: n2)
+    func testAppendMultipleValues() throws {
+        var list = LinkedList<Int>()
+        list.append(1)
+        list.append(2)
+        list.append(3)
 
-        let list = LinkedList(head: n1)
+        let headValue: Int = try XCTUnwrap(list.head?.data as? Int)
+        let tailValue: Int = try XCTUnwrap(list.tail?.data as? Int)
 
-        XCTAssertEqual(list.search(3), 3)
+        XCTAssertEqual(headValue, 1)
+        XCTAssertEqual(tailValue, 3)
     }
 
-    func testInsert() throws {
-        let n3 = Node(data: 3, next: nil)
-        let n2 = Node(data: 2, next: n3)
-        let n1 = Node(data: 1, next: n2)
+    func testAppendSingleValue() throws {
+        var list = LinkedList<Int>()
+        list.append(1)
 
-        let list = LinkedList(head: n1)
-        list.insert(data: 10, index: 2)
+        let headValue: Int = try XCTUnwrap(list.head?.data as? Int)
+        let tailValue: Int = try XCTUnwrap(list.tail?.data as? Int)
 
-        XCTAssertEqual(list.toString(), "[HEAD: 1] -> [2] -> [10] -> [TAIL: 3]")
+        XCTAssertEqual(headValue, 1)
+        XCTAssertEqual(tailValue, 1)
+    }
+
+    func testInset() throws {
+        var list = LinkedList<Int>()
+        list.push(1)
+        list.push(2)
+        list.push(3)
+        list.push(4)
+
+        list.insert(8, at: 2)
+        list.insert(9, at: 5)
+
+        XCTAssertEqual(list.node(at: 2)?.data, 8)
+        XCTAssertEqual(list.node(at: 5)?.data, 9)
+        XCTAssertEqual(list.tail?.data, 9)
+        
+        list.insert(10, at: 0)
+
+        XCTAssertEqual(list.head?.data, 10)
+    }
+
+    func testPop() throws {
+        var list = LinkedList<Int>()
+        list.push(1)
+        list.push(2)
+        list.push(3)
+        list.push(4)
+
+        let previousHead = list.head
+        let removed = list.pop()
+
+        XCTAssertEqual(list.head?.data, 3)
+        XCTAssertEqual(removed?.data, previousHead?.data)
+    }
+
+    func testRemoveLast() throws {
+        var list = LinkedList<Int>()
+        list.push(1)
+        list.push(2)
+        list.push(3)
+        list.push(4)
+
+        let previousTail = list.tail
+        let removed = list.removeLast()
+
+        XCTAssertEqual(list.tail?.data, 2)
+        XCTAssertEqual(removed?.data, previousTail?.data)
+    }
+
+    func testRemoveAtIndex() throws {
+        var list = LinkedList<Int>()
+        list.push(1)
+        list.push(2)
+        list.push(3)
+        list.push(4)
+
+        let nodeAtIndex = list.node(at: 2)
+        let removed = list.remove(at: 2)
+
+        XCTAssertEqual(removed?.data, nodeAtIndex?.data)
+
+        list.remove(at: 0)
+        XCTAssertEqual(list.head?.data, 3)
+    }
+
+    func testCollection() throws {
+        var list = LinkedList<Int>()
+        list.push(1)
+        list.push(2)
+        list.push(3)
+        list.push(4)
+
+        XCTAssertEqual(list.firstIndex(of: 3)?.node?.data, 3)
+        XCTAssertEqual(list.startIndex.node?.data, 4)
+        XCTAssertNil(list.endIndex.node?.data)
+        XCTAssertEqual(list.first, 4)
+        XCTAssertEqual(list.reduce(0, +), 10)
     }
 }

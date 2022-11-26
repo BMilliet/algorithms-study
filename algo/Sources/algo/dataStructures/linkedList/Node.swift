@@ -7,3 +7,12 @@ final class Node<T> {
         self.next = next
     }
 }
+
+extension Node: CustomStringConvertible {
+    var description: String {
+        guard let next = next else {
+            return "\(data)"
+        }
+        return "\(data) -> " + String(describing: next) + " "
+    }
+}
