@@ -27,6 +27,18 @@ struct LinkedList<T> {
         return currentNode
     }
 
+    func values() -> [T] {
+        var arr = [T]()
+        var current = head
+
+        while current != nil {
+            if let data = current?.data { arr.append(data) }
+            current = current?.next
+        }
+
+        return arr
+    }
+
     @discardableResult
     mutating func pop() -> Node<T>? {
         defer {
