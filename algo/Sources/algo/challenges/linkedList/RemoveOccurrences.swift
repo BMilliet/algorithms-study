@@ -1,34 +1,29 @@
 struct RemoveOccurrences<T: Equatable> {
 
     let linkedList: LinkedList<T>
+    let value: T
 
     func start() -> LinkedList<T> {
+        var list = linkedList
+        
+        while let head = list.head, list.head?.data == value {
+            list.head = list.head?.next
+        }
 
-        var list = LinkedList<T>()
+        var prev = list.head
+        var current = list.head?.next
 
-        var index = 0
-        var current = linkedList.head
-        var duplicated = [T]()
-        var values = [T]()
-
-        while current != nil {
-            if let data = current?.data {
-                if values.contains(data) {
-                    duplicated.append(data)
-                } else {
-                    values.append(data)
-                }
+        while let currentNode = current {
+            guard currentNode.data != value else {
+                prev?.next = currentNode.next
+                current = prev?.next
+                continue
             }
-            index += 1
+            prev = current
             current = current?.next
         }
 
-        values.forEach {
-            if !duplicated.contains($0) {
-                list.append($0)
-            }
-        }
-
+        list.tail = prev
         return list
     }
 }
