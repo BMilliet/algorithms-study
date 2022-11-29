@@ -5,25 +5,26 @@ struct RemoveOccurrences<T: Equatable> {
 
     func start() -> LinkedList<T> {
         var list = linkedList
-        
-        while let head = list.head, list.head?.data == value {
+
+        while let _ = list.head, list.head?.data == value {
             list.head = list.head?.next
         }
 
         var prev = list.head
         var current = list.head?.next
 
-        while let currentNode = current {
-            guard currentNode.data != value else {
-                prev?.next = currentNode.next
+        while current != nil {
+            if current?.data == value {
+                prev?.next = current?.next
                 current = prev?.next
-                continue
+            } else {
+                prev = current
+                current = current?.next
             }
-            prev = current
-            current = current?.next
         }
 
         list.tail = prev
-        return list
+
+       return list
     }
 }
