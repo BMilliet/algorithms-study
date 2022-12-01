@@ -9,7 +9,7 @@ final class ReverseListTests: XCTestCase {
         linkedList.append(2)
         linkedList.append(3)
 
-        var sut = ReverseList(linkedList: linkedList).start().values()
+        let sut = ReverseList(linkedList: linkedList).start().values()
 
         XCTAssertEqual(sut, [3, 2, 1])
     }
