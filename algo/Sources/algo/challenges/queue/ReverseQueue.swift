@@ -7,20 +7,16 @@ final class ReverseQueue<T> {
     }
 
     func start() -> QueueArray<T> {
-        let size = arr.size
         var stack = Stack<T>()
-        var newArr = QueueArray<T>()
 
-        for _ in 1...size {
-            guard let e = arr.dequeue() else { break }
+        while let e = arr.dequeue() {
             stack.push(e)
         }
 
-        for _ in 1...size {
-            guard let e = stack.pop() else { break }
-            newArr.enqueue(e)
+        while let e = stack.pop() {
+            arr.enqueue(e)
         }
 
-        return newArr
+        return arr
     }
 }
