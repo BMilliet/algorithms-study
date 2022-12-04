@@ -9,6 +9,10 @@ struct QueueArray<T>: Queue {
         array.first
     }
 
+    var size: Int {
+        array.count
+    }
+
     @discardableResult
     mutating func enqueue(_ element: T) -> Bool {
         array.append(element)
