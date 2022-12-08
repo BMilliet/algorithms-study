@@ -12,8 +12,11 @@ public struct QueueStack<T> : Queue {
         !leftStack.isEmpty ? leftStack.last : rightStack.first
     }
 
+    public private(set) var count = 0
+
     @discardableResult
     public mutating func enqueue(_ element: T) -> Bool {
+        count += 1
         rightStack.append(element)
         return true
     }
@@ -24,7 +27,12 @@ public struct QueueStack<T> : Queue {
             leftStack = rightStack.reversed()
             rightStack.removeAll()
         }
-        return leftStack.popLast()
+
+        let value = leftStack.popLast()
+        if value != nil {
+            count -= 1
+        }
+        return value
     }
 }
 
