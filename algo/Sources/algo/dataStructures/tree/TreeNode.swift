@@ -1,7 +1,7 @@
 final class TreeNode<T> {
     var value: T
     var children: [TreeNode] = []
-    var parent: TreeNode? = nil
+    weak var parent: TreeNode? = nil
 
     init(_ value: T) {
         self.value = value
