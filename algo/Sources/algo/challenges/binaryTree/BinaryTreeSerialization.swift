@@ -12,6 +12,6 @@ struct BinaryTreeSerialization<T> {
             list.append(e)
         }
 
-        return list //list.reversed()
+        return list
     }
 }
