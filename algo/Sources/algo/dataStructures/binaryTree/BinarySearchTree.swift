@@ -24,13 +24,6 @@ public struct BinarySearchTree<Element: Comparable> {
     }
 }
 
-private extension BinaryNode {
-    
-    var min: BinaryNode {
-        leftChild?.min ?? self
-    }
-}
-
 extension BinarySearchTree {
     
     public mutating func remove(_ value: Element) {

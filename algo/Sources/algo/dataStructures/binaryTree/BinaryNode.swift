@@ -10,6 +10,11 @@ public class BinaryNode<Element> {
 }
 
 extension BinaryNode {
+
+    var min: BinaryNode {
+        leftChild?.min ?? self
+    }
+
     public func traverseInOrder(visit: (Element) -> Void) {
         leftChild?.traverseInOrder(visit: visit)
         visit(value)
@@ -37,7 +42,6 @@ extension BinaryNode {
         rightChild?.traversePostOrder(visit: visit)
         visit(value)
     }
-
 }
 
 extension BinaryNode: CustomStringConvertible {
