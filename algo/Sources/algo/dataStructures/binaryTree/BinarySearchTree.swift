@@ -1,13 +1,12 @@
 public struct BinarySearchTree<Element: Comparable> {
     public private(set) var root: BinaryNode<Element>?
-    
+
     public init() {}
-    
-    
-    public mutating func insert(_ value: Element) {
+
+    mutating func insert(_ value: Element) {
         root = insert(from: root, value: value)
     }
-    
+
     private func insert(from node: BinaryNode<Element>?, value: Element) -> BinaryNode<Element> {
         
         guard let node = node else {
@@ -91,5 +90,42 @@ extension BinarySearchTree: CustomStringConvertible {
     public var description: String {
         guard let root = root else { return "empty tree" }
         return String(describing: root)
+    }
+}
+
+extension BinarySearchTree: Equatable {
+    public static func ==(lhs: BinarySearchTree,
+                          rhs: BinarySearchTree) -> Bool {
+        isEqual(lhs.root, rhs.root)
+    }
+    
+    private static func isEqual<Element: Equatable>(_ node1: BinaryNode<Element>?,
+                                                    _ node2: BinaryNode<Element>?) -> Bool {
+
+        guard let leftNode = node1, let rightNode = node2 else {
+            return node1 == nil && node2 == nil
+        }
+
+        return leftNode.value == rightNode.value &&
+        isEqual(leftNode.leftChild, rightNode.leftChild) &&
+        isEqual(leftNode.rightChild, rightNode.rightChild)
+    }
+}
+
+extension BinarySearchTree where Element: Hashable {
+
+    public func contains(_ subtree: BinarySearchTree) -> Bool {
+        var resp = true
+        var set: Set<Element> = []
+
+        root?.traverseInOrder { set.insert($0) }
+
+        subtree.root?.traverseInOrder {
+            if !set.contains($0) {
+                resp = false
+            }
+        }
+
+        return resp
     }
 }

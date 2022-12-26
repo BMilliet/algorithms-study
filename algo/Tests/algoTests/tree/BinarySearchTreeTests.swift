@@ -4,7 +4,7 @@ import XCTest
 
 final class BinarySearchTreeTests: XCTestCase {
     func testInsert() throws {
-        let tree = BinarySearchTreeFactory().makeNumbersTree()
+        let tree = BinarySearchTreeFactory().makeNumbersTree1()
         
         XCTAssertEqual(tree.root?.value, 40)
         XCTAssertEqual(tree.root?.leftChild?.value, 18)
@@ -12,7 +12,7 @@ final class BinarySearchTreeTests: XCTestCase {
     }
     
     func testContains() throws {
-        let tree = BinarySearchTreeFactory().makeNumbersTree()
+        let tree = BinarySearchTreeFactory().makeNumbersTree1()
         
         XCTAssertTrue(tree.contains(40))
         XCTAssertTrue(tree.contains(0))
