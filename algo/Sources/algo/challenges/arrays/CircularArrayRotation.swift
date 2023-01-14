@@ -10,7 +10,6 @@ struct CircularArrayRotation {
         
         let rotatedArray = rotate()
         
-        
         sets.forEach {
             resp.append(rotatedArray[$0])
         }
