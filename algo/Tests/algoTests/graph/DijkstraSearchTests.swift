@@ -20,7 +20,6 @@ final class DijkstraSearchTests: XCTestCase {
 
         var sut = DijkstraSearch(graph: graph)
         let costs = sut.start()
-        //DijkstraSearch(root: start).start()
 
         XCTAssertEqual(costs["end"], 6)
     }
