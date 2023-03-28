@@ -1,4 +1,5 @@
 import Foundation
+
 struct CompareStrings {
 
     let first: String

@@ -1,4 +1,5 @@
 import Foundation
+
 struct CompareTwoArrays<T: Comparable & Hashable> {
 
     let first: [T]
