@@ -1,12 +1,16 @@
 import Foundation
 
-
 final class DijkstraSearchV2 {
     let source: DijstraNode
     private var nodes = [String: DijstraNode]()
 
-    init(source: DijstraNode) {
+    // greedyMode
+    let greedy: Bool
+    private var foundEnd: Bool = false
+
+    init(source: DijstraNode, greedy: Bool = false) {
         self.source = source
+        self.greedy = greedy
     }
 
     func start() -> Int? {
@@ -18,10 +22,22 @@ final class DijkstraSearchV2 {
     private func calculateLowestCosts(_ node: DijstraNode) {
         nodes[node.name] = node
 
-        node.nextNodes.forEach {
-            $0.key.update(newCost: $0.value, parent: node)
-            calculateLowestCosts($0.key)
+        // greedy mode would return as soon as it finds the end
+        if node.name == "end" && greedy { foundEnd = true }
+
+        // look lowest cost first
+        var sortedNodes = node.nextNodes.sorted { $0.value < $1.value }
+
+        while !sortedNodes.isEmpty && !foundEnd {
+            let next = sortedNodes.removeFirst()
+            next.key.update(newCost: next.value, parent: node)
+            calculateLowestCosts(next.key)
         }
+
+//        sortedNodes.forEach {
+//            $0.key.update(newCost: $0.value, parent: node)
+//            calculateLowestCosts($0.key)
+//        }
     }
 
     private func calculateCheapestPath(source: DijstraNode, endNode: DijstraNode?) -> Int? {
