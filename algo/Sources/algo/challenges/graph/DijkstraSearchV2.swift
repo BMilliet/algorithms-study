@@ -3,7 +3,6 @@ import Foundation
 
 final class DijkstraSearchV2 {
     let source: DijstraNode
-    private var lowestCosts = [String: Int]()
     private var nodes = [String: DijstraNode]()
 
     init(source: DijstraNode) {
@@ -12,7 +11,6 @@ final class DijkstraSearchV2 {
 
     func start() -> Int? {
         calculateLowestCosts(source)
-        //print(lowestCosts)
         let total = calculateCheapestPath(source: source, endNode: nodes["end"])
         return total
     }
@@ -22,7 +20,6 @@ final class DijkstraSearchV2 {
 
         node.nextNodes.forEach {
             $0.key.update(newCost: $0.value, parent: node)
-            lowestCosts[$0.key.name] = $0.key.cost
             calculateLowestCosts($0.key)
         }
     }
