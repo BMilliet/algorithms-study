@@ -89,11 +89,6 @@ final class ShoppingBagProblemV2 {
                 if bag.canAdd(p) {
                     bag.add(p)
 
-                    if bag.availableWeight() > 0 {
-                        guard let bestBag = bags[bag.availableWeight()] else { continue }
-                        bestBag.items.forEach { bag.add($0) }
-                    }
-
                 } else {
                     bag.dump()
                     bag.add(p)
