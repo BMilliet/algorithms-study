@@ -13,7 +13,7 @@ final class ShoppingBagTests: XCTestCase {
             Product(name: "water", value: 10, weight: 3),
         ]
 
-        let productsToBuy = ShoppingBag(products: products, weightLimit: 6).start()
+        let productsToBuy = ShoppingBagProblem(products: products, weightLimit: 6).start()
 
         XCTAssertEqual(productsToBuy.first?.key, 25)
     }

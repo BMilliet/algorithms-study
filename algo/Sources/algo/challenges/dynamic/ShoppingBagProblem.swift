@@ -1,12 +1,12 @@
 import Foundation
 
-struct Product {
+struct Product: Equatable, Hashable {
     let name: String
     let value: Double
     let weight: Int
 }
 
-struct ShoppingBag {
+struct ShoppingBagProblem {
 
     let products: [Product]
     let weightLimit: Int
